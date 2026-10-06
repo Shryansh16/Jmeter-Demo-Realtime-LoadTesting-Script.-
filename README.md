@@ -1,54 +1,63 @@
-# JMeter Real-Time User Script Demo
+# JMeter Demo Realtime LoadTesting Script
 
-This repository contains a performance testing script built with [Apache JMeter](https://jmeter.apache.org/). The script is designed to simulate a high-load, real-time user environment by running a concurrent load test with 20,000 users.
+This repository contains a JMeter performance testing script (`Demo_realTime_User-Jmeter-Script.jmx`) configured for high-load simulation (20,000 concurrent users). Real-time data has been removed from the API payloads to make it safe for sharing.
 
-**Note**: All sensitive real-time data, API endpoints, and hostnames have been anonymized or removed to keep the script safe for public sharing on GitHub.
+## Test Plan Structure
 
-## Test Plan Overview
+The script follows the exact structure below, mimicking real-world user activity distributions using Throughput Controllers.
 
-- **Test Plan Name**: `Nbcc_BACKEND_20000_USER_NON_GUI_TEST`
-- **Thread Group**: Concurrency Thread Group (`NBcc_20000_user_Login`)
-  - Target Concurrency: 1000
-  - Ramp-Up Time: 20 seconds
-  - Ramp-Up Steps: 10
-  - Hold Target Rate Time: 300 seconds
+```text
+Test Plan
+└── NBcc_20000_user_Login (bzm - Concurrency Thread Group)
+    ├── CSV Data Set Config
+    ├── Uniform Random Timer
+    ├── NBCC_20000_User_Login (HTTP Request)
+    │   ├── JSON Extractor
+    │   ├── NBcc_Header Manager
+    │   ├── View Results Tree
+    │   └── Aggregate Report
+    ├── Debug Sampler
+    │   └── View Results Tree
+    └── Loop Controller
+        ├── HTTP Header Manager
+        ├── News_Throughput Controller
+        │   ├── Random Controller
+        │   ├── Uniform Random Timer
+        │   ├── news_tab
+        │   ├── Like_news.
+        │   └── news_Got_it
+        ├── Polls_Throughput Controller
+        │   ├── Random Controller
+        │   ├── Uniform Random Timer
+        │   ├── poll
+        │   └── poll_submit 
+        ├── Question_of_the_day_Throughput Controller
+        │   ├── Question_of_the_day.
+        │   └── Submit_questionOftheDay
+        ├── Question_of_the_day_(no_activity perform).Throughput Controller
+        │   └── Question_of_the_day.
+        ├── Polls_Throughput Controller_(no-activity-perform)
+        │   ├── Random Controller_(no-activity-perform)
+        │   ├── Uniform Random Timer
+        │   └── poll
+        └── News_Throughput Controller (no activity perform)
+            ├── Random Controller
+            ├── Uniform Random Timer
+            └── news_tab
+```
 
-## Features & Workflows Included
+## Details & Components Used
 
-The test simulates typical user behavior using **Throughput Controllers** to distribute load among different application features proportionally:
-
-1. **User Login & Authentication**: 
-   - Reads user credentials (emails) from a CSV file (`backend_users_20000.csv`).
-   - Performs a user login (`POST`).
-   - Extracts the `access_token` from the response using a JSON Extractor.
-   - Passes the token in the `Authorization: Bearer ${access_token}` header for all subsequent requests.
-
-2. **News Feed (35% Throughput)**: 
-   - View `news_tab` (`GET`)
-   - Like news (`POST` with a `LIKE` reaction)
-   - Acknowledge news (`news_Got_it`)
-
-3. **Polls (25% Throughput)**:
-   - View polls (`GET`)
-   - Submit poll option (`POST`)
-
-4. **Question of the Day (25% Throughput)**:
-   - View Question of the Day (`GET`)
-   - Submit Answer (`POST`)
-
-## Prerequisites
-
-- **Apache JMeter 5.6.3** or higher.
-- **JMeter Plugins Manager**: Requires plugins for `bzm - Concurrency Thread Group` (Custom Thread Groups).
-- A valid CSV dataset with user data (e.g., `email`) to feed the `CSV Data Set Config`.
+- **bzm - Concurrency Thread Group**: Configured to reach a target concurrency of 1,000 users with a 20-second ramp-up time (in 10 steps), holding the target rate for 300 seconds.
+- **CSV Data Set Config**: Reads user credentials (emails) to authenticate.
+- **JSON Extractor**: Grabs the `access_token` from the login response to pass in the HTTP Header Manager for subsequent requests.
+- **Throughput Controllers**: 
+  - Splits the user traffic logically into performing activities (reading/liking news, submitting polls, answering questions of the day) and just viewing (no activity perform paths).
+- **Uniform Random Timers**: Added between requests to simulate human think time.
 
 ## How to Run
 
-1. Open JMeter GUI.
-2. Load the `Demo_realTime_User-Jmeter-Script.jmx` file.
-3. Update the `CSV Data Set Config` file path to point to your local dataset file (currently points to `C:/Users/LENOVO/Downloads/Load_test_csv_file/backend_users_20000.csv`).
-4. Update the HTTP Request samplers with your target application's Server Name / IP and Paths.
-5. For high load, it is highly recommended to run the test in **Non-GUI mode**:
-   ```bash
-   jmeter -n -t Demo_realTime_User-Jmeter-Script.jmx -l results.csv -e -o /path/to/html/report
-   ```
+1. Open JMeter GUI (requires **JMeter Plugins Manager** with `bzm - Concurrency Thread Group` installed).
+2. Open `Demo_realTime_User-Jmeter-Script.jmx`.
+3. Provide your own valid `.csv` data file in the `CSV Data Set Config`.
+4. Run in Non-GUI mode for best performance.
