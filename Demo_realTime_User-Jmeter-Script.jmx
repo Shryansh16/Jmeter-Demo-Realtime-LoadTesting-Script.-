@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
   <hashTree>
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Nbcc_BACKEND_20000_USER_NON_GUI_TEST">
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Demo_BACKEND_20000_USER_NON_GUI_TEST">
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
@@ -9,7 +9,7 @@
       <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
-      <com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup guiclass="com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroupGui" testclass="com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup" testname="NBcc_20000_user_Login">
+      <com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup guiclass="com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroupGui" testclass="com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup" testname="Demo_20000_user_Login">
         <elementProp name="ThreadGroup.main_controller" elementType="com.blazemeter.jmeter.control.VirtualUserController"/>
         <stringProp name="ThreadGroup.on_sample_error">startnextloop</stringProp>
         <stringProp name="TargetLevel">1000</stringProp>
@@ -38,7 +38,7 @@
           <stringProp name="RandomTimer.range">2000</stringProp>
         </UniformRandomTimer>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NBCC_20000_User_Login">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Demo_20000_User_Login">
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -48,7 +48,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;name&quot;: &quot;Nbcctest&quot;, &quot;email&quot;: &quot;${email}&quot;,&quot;password&quot;: &quot;Test@123&quot;,&quot;isTermsAccepted&quot;: true, &quot;test&quot;:true}</stringProp>
+                <stringProp name="Argument.value">{&quot;name&quot;: &quot;Demotest&quot;, &quot;email&quot;: &quot;${email}&quot;,&quot;password&quot;: &quot;Test@123&quot;,&quot;isTermsAccepted&quot;: true, &quot;test&quot;:true}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -61,7 +61,7 @@
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
           </JSONPostProcessor>
           <hashTree/>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="NBcc_Header-Manager">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Demo_Header-Manager">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Content-Type</stringProp>

@@ -8,12 +8,12 @@ The script follows the exact structure below, mimicking real-world user activity
 
 ```text
 Test Plan
-└── NBcc_20000_user_Login (bzm - Concurrency Thread Group)
+└── Demo_20000_user_Login (bzm - Concurrency Thread Group)
     ├── CSV Data Set Config
     ├── Uniform Random Timer
-    ├── NBCC_20000_User_Login (HTTP Request)
+    ├── Demo_20000_User_Login (HTTP Request)
     │   ├── JSON Extractor
-    │   ├── NBcc_Header Manager
+    │   ├── Demo_Header Manager
     │   ├── View Results Tree
     │   └── Aggregate Report
     ├── Debug Sampler
